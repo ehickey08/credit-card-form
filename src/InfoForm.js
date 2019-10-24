@@ -1,29 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import {InputGroup, ExpirationGroup} from './components'
 class InfoForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.passUpState = props.passUpState
+        this.passUpState = props.passUpState;
     }
 
     handleChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        }, () => this.passUpState(this.state));
+        this.setState(
+            {
+                [e.target.name]: e.target.value,
+            },
+            () => this.passUpState(this.state)
+        );
     };
     render() {
-        const months = ['Month'];
-        const years = ['Year'];
-        const today = new Date();
-        const year = today.getFullYear();
-
-        for (let i = 0; i < 12; i++) {
-            years.push(`${year + i}`);
-            months.push(`${i < 9 ? 0 : ''}${i + 1}`);
-        }
-
         return (
             <InfoFormContainer>
                 <InfoRowContainer>
@@ -45,18 +38,9 @@ class InfoForm extends React.Component {
                     />
                 </InfoRowContainer>
                 <InfoRowContainer>
-                    <SelectGroup
-                        label='Expiration Date'
-                        name='cardMonth'
+                    <ExpirationGroup
                         handleChange={this.handleChange}
-                        value={this.state.cardMonth}
-                        options={months}
-                    />
-                    <SelectGroup
-                        name='cardYear'
-                        handleChange={this.handleChange}
-                        value={this.state.cardYear}
-                        options={years}
+                        state={this.state}
                     />
                     <InputGroup
                         label='CVV'
@@ -72,52 +56,39 @@ class InfoForm extends React.Component {
     }
 }
 
-const InputGroup = ({ label, name, type, handleChange, value }) => {
-    return (
-        <InputGroupContainer>
-            <label htmlFor={name} className='info-form_label'>
-                {label}
-            </label>
-            <input
-                type={type}
-                className='info-form_input'
-                autoComplete='off'
-                value={value}
-                name={name}
-                onChange={handleChange}
-            />
-        </InputGroupContainer>
-    );
-};
+const InfoFormContainer = styled.div`
+    background: #fff;
+    box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4);
+    border-radius: ${({ theme }) => theme.borderRadius};
+    padding: 180px 35px 35px;
+    width: 100%;
 
-const SelectGroup = ({ label, name, handleChange, value, options }) => {
-    return (
-        <InputGroupContainer>
-            {label && (
-                <label htmlFor={name} className='info-form_label'>
-                    {label}
-                </label>
-            )}
-            <select
-                className='info-form_select'
-                autoComplete='off'
-                value={value}
-                name={name}
-                onChange={handleChange}>
-                {options.map(option => (
-                    <option key={option} value={option}>
-                        {option}
-                    </option>
-                ))}
-            </select>
-        </InputGroupContainer>
-    );
-};
+    .info-form_submit{
+        width: 100%;
+        height: ${({theme}) => theme.inputHeight};
+        background: ${({theme}) => theme.buttonColor};
+        border: none;
+        border-radius: ${({theme}) => theme.borderRadius};
+        font-size: 2.2rem;
+        font-weight: 600;
+        box-shadow: 3px 10px 20px 0px rgba(35, 100, 210, 0.3);
+        color: #fff;
+        cursor: pointer;
+    }
+`;
 
-const InputGroupContainer = styled.div``;
+const InfoRowContainer = styled.div`
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    width: 100%;
 
-const InfoFormContainer = styled.div``;
+    .cardCvv{
+        width: 33%;
+    }
+`;
 
-const InfoRowContainer = styled.div``;
+
+
 
 export default InfoForm;
