@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const InputGroup = ({ label, name, type, handleChange, value, maxLength, onFocus, onBlur }) => {
+export const InputGroup = ({ label, name, type, handleChange, value, maxLength, onFocus, onBlur, error, reference }) => {
+    let validity = error ? 'invalid': 'valid'
     return (
         <InputGroupContainer className={name}>
             <label htmlFor={name} className='info-form_label'>
@@ -9,7 +10,7 @@ export const InputGroup = ({ label, name, type, handleChange, value, maxLength, 
             </label>
             <input
                 type={type}
-                className='info-form_input'
+                className={`info-form_input ${validity}`}
                 autoComplete='off'
                 value={value}
                 name={name}
@@ -17,7 +18,9 @@ export const InputGroup = ({ label, name, type, handleChange, value, maxLength, 
                 maxLength={maxLength}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                ref={reference}
             />
+            {error && <span className='error-text'>{error}</span>}
         </InputGroupContainer>
     );
 };

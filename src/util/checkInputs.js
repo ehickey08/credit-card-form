@@ -1,11 +1,11 @@
 import {cardType} from './cardValidation'
 
 export const digitOnly = value => {
-    return value.length===0 || /\d|\s/.test(value[value.length-1])
+    return value.length===0 || /^(\d|\s)*$/.test(value)
 }
 
 export const letterOnly = value => {
-    return value.length===0 || /[A-Z .-]/i.test(value[value.length-1])
+    return value.length===0 || /^[A-Z .-]*$/i.test(value)
 }
 
 export const formatCardNum = value => {

@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { InputGroup, ExpirationGroup } from './components';
-import { digitOnly, letterOnly, formatCardNum, validCardNum } from './util';
+import {
+    digitOnly,
+    letterOnly,
+    formatCardNum,
+    validCardNum,
+    validCvv,
+} from './util';
 
 class InfoForm extends React.Component {
     constructor(props) {
@@ -12,8 +18,15 @@ class InfoForm extends React.Component {
             cardCvv: '',
             expirationYear: 'Year',
             expirationMonth: 'Month',
+            errors: {},
+            position: null
         };
         this.passUpState = props.passUpState;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const index = prevState.position || 0;
+        this.inputRef.setSelectionRange(index, index);
     }
 
     handleChange = e => {
@@ -25,6 +38,7 @@ class InfoForm extends React.Component {
                 this.setState({ [e.target.name]: value }, () =>
                     this.passUpState(this.state)
                 );
+            this.setState({position: e.target.selectionStart})
             return;
         }
 
@@ -53,9 +67,45 @@ class InfoForm extends React.Component {
     };
 
     validateForm = () => {
+        this.setState({ errors: {} });
         let correctCard = validCardNum(this.state.cardNumber);
-        console.log(correctCard);
+        let correctCvv = validCvv(this.state.cardCvv, this.state.cardNumber);
+        for (let key in this.state) {
+            if (
+                this.state[key] === '' ||
+                this.state[key] === 'Month' ||
+                this.state[key] === 'Year'
+            ) {
+                this.setState(prevState => ({
+                    errors: {
+                        ...prevState.errors,
+                        [key]: '*This field is required.',
+                    },
+                }));
+            }
+        }
+        if (!correctCard && this.state.cardNumber) {
+            this.setState(prevState => ({
+                errors: {
+                    ...prevState.errors,
+                    cardNumber: '*Invalid card number.',
+                },
+            }));
+        }
+
+        if (!correctCvv && this.state.cardCvv) {
+            this.setState(prevState => ({
+                errors: {
+                    ...prevState.errors,
+                    cardCvv: '*Invalid CVV number.',
+                },
+            }));
+        }
     };
+
+    assignRef = c => {
+        this.inputRef = c
+    }
 
     render() {
         return (
@@ -69,6 +119,8 @@ class InfoForm extends React.Component {
                         value={this.state.cardNumber}
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
+                        error={this.state.errors.cardNumber}
+                        reference={this.assignRef}
                     />
                 </InfoRowContainer>
                 <InfoRowContainer>
@@ -80,6 +132,7 @@ class InfoForm extends React.Component {
                         value={this.state.cardHolder}
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
+                        error={this.state.errors.cardHolder}
                     />
                 </InfoRowContainer>
                 <InfoRowContainer>
@@ -88,6 +141,7 @@ class InfoForm extends React.Component {
                         state={this.state}
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
+                        error={this.state.errors}
                     />
                     <InputGroup
                         label='CVV'
@@ -98,6 +152,7 @@ class InfoForm extends React.Component {
                         maxLength='4'
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
+                        error={this.state.errors.cardCvv}
                     />
                 </InfoRowContainer>
                 <button
@@ -128,6 +183,15 @@ const InfoFormContainer = styled.div`
         box-shadow: 3px 10px 20px 0px rgba(35, 100, 210, 0.3);
         color: #fff;
         cursor: pointer;
+    }
+
+    .invalid {
+        border: 1px solid ${({ theme }) => theme.errorColor};
+    }
+
+    .error-text {
+        color: ${({ theme }) => theme.errorColor};
+        font-size: 1.1rem;
     }
 `;
 

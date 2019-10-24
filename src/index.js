@@ -15,7 +15,8 @@ const theme = {
     fontColor: '#1a3b5d',
     borderColor: '#ced6e0',
     inputHeight: '50px',
-    buttonColor: '#2364d2'
+    buttonColor: '#2364d2',
+    errorColor: '#A50203'
 };
 
 ReactDOM.render(
