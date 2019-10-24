@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const InputGroup = ({ label, name, type, handleChange, value }) => {
+export const InputGroup = ({ label, name, type, handleChange, value, maxLength, onFocus, onBlur }) => {
     return (
         <InputGroupContainer className={name}>
             <label htmlFor={name} className='info-form_label'>
@@ -14,6 +14,9 @@ export const InputGroup = ({ label, name, type, handleChange, value }) => {
                 value={value}
                 name={name}
                 onChange={handleChange}
+                maxLength={maxLength}
+                onFocus={onFocus}
+                onBlur={onBlur}
             />
         </InputGroupContainer>
     );

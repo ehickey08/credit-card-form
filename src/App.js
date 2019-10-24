@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import InfoForm from './InfoForm';
+import InteractiveCard from './InteractiveCard'
 
 function App() {
     const [globalState, setGlobalState] = useState({});
+    const [flipCard, setFlipCard] = useState(false);
+    const [targetField, setTargetField] = useState('');
+
     const passUpState = formState => {
         setGlobalState({ ...formState });
     };
 
     return (
         <AppContainer>
-            <InfoForm passUpState={passUpState} />
+            <InteractiveCard />
+            <InfoForm
+                passUpState={passUpState}
+                setFlipCard={setFlipCard}
+                setTargetField={setTargetField}
+            />
         </AppContainer>
     );
 }

@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { InputGroupContainer } from './InputGroup';
-export const ExpirationGroup = ({ state, handleChange }) => {
+export const ExpirationGroup = ({ state, handleChange, onFocus, onBlur }) => {
     const months = ['Month'];
     const years = ['Year'];
     const today = new Date();
     const year = today.getFullYear();
-
+    const month = state.expirationYear === `${year}` ? today.getMonth() : 0;
+    console.log(month)
     for (let i = 0; i < 12; i++) {
         years.push(`${year + i}`);
         months.push(`${i < 9 ? 0 : ''}${i + 1}`);
@@ -20,6 +21,8 @@ export const ExpirationGroup = ({ state, handleChange }) => {
                 <select
                     className='info-form_select'
                     autoComplete='off'
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     value={state.expirationMonth}
                     name='expirationMonth'
                     onChange={handleChange}>
@@ -27,8 +30,7 @@ export const ExpirationGroup = ({ state, handleChange }) => {
                         <option
                             key={option}
                             value={option}
-                            disabled={option === 'Month'}
-                            selected={option === 'Month'}>
+                            disabled={option === 'Month' || +option<=month}>
                             {option}
                         </option>
                     ))}
@@ -37,6 +39,8 @@ export const ExpirationGroup = ({ state, handleChange }) => {
                 <select
                     className='info-form_select'
                     autoComplete='off'
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     value={state.expirationYear}
                     name='expirationYear'
                     onChange={handleChange}>
@@ -44,9 +48,7 @@ export const ExpirationGroup = ({ state, handleChange }) => {
                         <option
                             key={option}
                             value={option}
-                            disabled={option === 'Year'}
-                            selected={option === 'Year'}
-                            >
+                            disabled={option === 'Year'}>
                             {option}
                         </option>
                     ))}
