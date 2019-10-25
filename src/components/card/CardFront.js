@@ -40,7 +40,7 @@ export const CardFrontContainer = styled.div`
     .expirationYear {
         width: 80px;
         height: 57px;
-        transform: translateX(355px) translateY(196px);
+        transform: translateX(340px) translateY(196px);
         opacity: 1;
     }
 `;
