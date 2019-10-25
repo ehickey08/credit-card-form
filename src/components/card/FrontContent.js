@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { cards } from '../../images';
-import { cardType } from '../../util';
+import { cardType, formatCardWithMask } from '../../util';
 
 export const FrontContent = ({ cardInfo }) => {
     const {
@@ -35,22 +35,31 @@ const TopRow = ({ type }) => {
     );
 };
 
-const MiddleRow = ({cardNumber, type}) => {
+const MiddleRow = ({ cardNumber }) => {
+    let value = cardNumber ? formatCardWithMask(cardNumber).split('') : (`${'#'.repeat(4)} `.repeat(4)).split('');
     return (
         <MiddleRowContainer className='middle-row-container'>
-            <label>{}</label>
+            {value.map(digit => (
+                <span>{digit}</span>
+            ))}
         </MiddleRowContainer>
     );
 };
 
-const BottomRow = ({cardHolder, expirationYear, expirationMonth}) => {
-    const yearDisplay = (expirationYear && expirationYear !=='Year') ? expirationYear.slice(-2) : 'YY'
-    const monthDisplay = (expirationMonth && expirationMonth !== 'Month') ? expirationMonth : 'MM'
+const BottomRow = ({ cardHolder, expirationYear, expirationMonth }) => {
+    const yearDisplay =
+        expirationYear && expirationYear !== 'Year'
+            ? expirationYear.slice(-2)
+            : 'YY';
+    const monthDisplay =
+        expirationMonth && expirationMonth !== 'Month' ? expirationMonth : 'MM';
     return (
         <BottomRowContainer className='bottom-row-container'>
             <label htmlFor='card-holder' className='card-holder-label'>
                 <div className='card-holder'>Card Holder</div>
-                <div className='card-holder-name'>{cardHolder || 'Full Name'}</div>
+                <div className='card-holder-name'>
+                    {cardHolder || 'Full Name'}
+                </div>
             </label>
             <div className='card-date'>
                 <label htmlFor='card-month' className='card-date-label'>

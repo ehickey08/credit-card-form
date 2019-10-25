@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { CardFrontContainer } from './CardFront';
 import { CardStripe, CardBackground, BackContent } from './index';
 
-export const CardBack = ({ index }) => {
+export const CardBack = ({ index, cvv, cardNumber }) => {
     return (
         <CardBackContainer className='card-back-container'>
-            <CardBackground index={index} side='back'/>
+            <CardBackground index={index} side='back' />
             <CardStripe />
-            <BackContent />
+            <BackContent cvv={cvv} cardNumber={cardNumber}/>
         </CardBackContainer>
     );
 };

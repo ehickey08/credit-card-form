@@ -15,7 +15,11 @@ export default class InteractiveCard extends Component {
                         index={this.props.index}
                         cardInfo={this.props.cardInfo}
                     />
-                    <CardBack index={this.props.index} />
+                    <CardBack
+                        index={this.props.index}
+                        cvv={this.props.cardInfo.cardCvv}
+                        cardNumber={this.props.cardInfo.cardNumber}
+                    />
                 </Card>
             </CardContainer>
         );
