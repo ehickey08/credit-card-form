@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import InfoForm from './InfoForm';
-import InteractiveCard from './InteractiveCard'
+import InteractiveCard from './InteractiveCard';
 
 function App() {
     const [globalState, setGlobalState] = useState({});
@@ -14,7 +14,11 @@ function App() {
 
     return (
         <AppContainer>
-            <InteractiveCard />
+            <InteractiveCard
+                cardInfo={globalState}
+                flipCard={flipCard}
+                targetField={targetField}
+            />
             <InfoForm
                 passUpState={passUpState}
                 setFlipCard={setFlipCard}

@@ -25,7 +25,9 @@ class InfoForm extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const index = prevState.position || 0;
+        //without this ref and selection setting, cursor moves to end of input on change
+        let index = prevState.position || 0;
+        if(index%5===0 && index+1>=this.state.cardNumber.length && index!==0) ++index
         this.inputRef.setSelectionRange(index, index);
     }
 
@@ -49,7 +51,7 @@ class InfoForm extends React.Component {
             shouldContinue = letterOnly(e.target.value);
         if (shouldContinue) {
             this.setState({ [e.target.name]: e.target.value }, () =>
-                this.passUpState(this.state)
+                this.passUpState(this.state) //sends state to app, to pass to interactive card
             );
         }
     };
@@ -57,13 +59,13 @@ class InfoForm extends React.Component {
     onFocus = e => {
         e.persist();
         if (e.target.name === 'cardCvv') this.props.setFlipCard(true);
-        this.props.setTargetField(e.target.name);
+        this.props.setTargetField(e.target.name); //adds focus to interactive card
     };
 
     onBlur = e => {
         e.persist();
         if (e.target.name === 'cardCvv') this.props.setFlipCard(false);
-        this.props.setTargetField('');
+        this.props.setTargetField(''); //removes focus for interactive card
     };
 
     validateForm = () => {
