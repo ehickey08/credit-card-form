@@ -27,20 +27,22 @@ export const FrontContent = ({ cardInfo }) => {
 const TopRow = ({ type }) => {
     return (
         <TopRowContainer className='top-row-container'>
-            <img className='chip-image' src={cards.chip} />
+            <img className='chip-image' src={cards.chip} alt='' />
             <div className='card-type'>
-                <img src={cards[type]} />
+                <img alt='' src={cards[type]} />
             </div>
         </TopRowContainer>
     );
 };
 
 const MiddleRow = ({ cardNumber }) => {
-    let value = cardNumber ? formatCardWithMask(cardNumber).split('') : (`${'#'.repeat(4)} `.repeat(4)).split('');
+    let value = cardNumber
+        ? formatCardWithMask(cardNumber).split('')
+        : `${'#'.repeat(4)} `.repeat(4).split('');
     return (
         <MiddleRowContainer className='middle-row-container'>
             {value.map(digit => (
-                <span>{digit}</span>
+                <span key={`${Math.random()}${digit}${Math.random()}`}>{digit}</span>
             ))}
         </MiddleRowContainer>
     );
@@ -101,7 +103,7 @@ const TopRowContainer = styled.div`
         max-width: 100px;
         margin-left: auto;
         width: 100%;
-
+        
         img {
             max-width: 100%;
             object-fit: contain;

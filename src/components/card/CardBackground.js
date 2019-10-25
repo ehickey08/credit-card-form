@@ -5,7 +5,7 @@ export const CardBackground = ({index, side}) => {
     
     return (
         <CardBackgroundContainer className='card-background-container' side={side}>
-            <img src={options[index]} />
+            <img src={options[index]} alt=''/>
         </CardBackgroundContainer>
     );
 };

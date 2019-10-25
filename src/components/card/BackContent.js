@@ -10,7 +10,7 @@ export const BackContent = ({ cvv, cardNumber }) => {
             <div className='cvv-label'>CVV</div>
             <div className='cvv-container'>{cvv}</div>
             <div className='card-type'>
-                <img src={cards[type]} />
+                <img src={cards[type]} alt='' />
             </div>
         </BackContentContainer>
     );

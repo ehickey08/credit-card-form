@@ -194,6 +194,9 @@ const InfoFormContainer = styled.div`
     .error-text {
         color: ${({ theme }) => theme.errorColor};
         font-size: 1.1rem;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        line-height: 20px;
     }
 `;
 
