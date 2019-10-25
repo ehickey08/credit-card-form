@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { FocusBorder, CardBackground, FrontContent } from './index';
 
-export const CardFront = ({targetField}) => {
+export const CardFront = ({ targetField, index, cardInfo }) => {
     return (
-        <CardFrontContainer className='card-front'>
-            <FocusBorder targetField={targetField}/>
-            <CardBackground />
-            <FrontContent />
+        <CardFrontContainer className='card-front-container'>
+            <FocusBorder targetField={targetField} />
+            <CardBackground index={index} side='front' />
+            <FrontContent cardInfo={cardInfo}/>
         </CardFrontContainer>
     );
 };
@@ -26,17 +26,21 @@ export const CardFrontContainer = styled.div`
         width: 376px;
         height: 47px;
         transform: translateX(15px) translateY(114px);
+        opacity: 1;
     }
 
     .cardHolder {
         width: 315px;
         height: 57px;
         transform: translateX(15px) translateY(196px);
+        opacity: 1;
     }
 
-    .expirationMonth, .expirationYear{
+    .expirationMonth,
+    .expirationYear {
         width: 80px;
         height: 57px;
         transform: translateX(355px) translateY(196px);
+        opacity: 1;
     }
 `;

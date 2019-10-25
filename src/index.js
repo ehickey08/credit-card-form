@@ -19,10 +19,12 @@ const theme = {
     errorColor: '#A50203'
 };
 
+const index = Math.floor(Math.random() * 25);
+
 ReactDOM.render(
     <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <App />
+        <App index={index}/>
     </ThemeProvider>,
     document.getElementById('root')
 );

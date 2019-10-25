@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const FocusBorder = ({ targetField }) => {
     return (
         <FocusBorderContainer
-            className={`${targetField}`}></FocusBorderContainer>
+            className={`focus-border-container ${targetField}`}></FocusBorderContainer>
     );
 };
 
@@ -32,8 +32,5 @@ const FocusBorderContainer = styled.div`
         border-radius: 5px;
         filter: blur(25px);
         opacity: 0.5;
-    }
-
-    &.cardHolder {
     }
 `;

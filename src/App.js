@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import InfoForm from './InfoForm';
 import InteractiveCard from './InteractiveCard';
 
-function App() {
+function App({index}) {
     const [globalState, setGlobalState] = useState({});
     const [flipCard, setFlipCard] = useState(false);
     const [targetField, setTargetField] = useState('');
@@ -18,6 +18,7 @@ function App() {
                 cardInfo={globalState}
                 flipCard={flipCard}
                 targetField={targetField}
+                index={index}
             />
             <InfoForm
                 passUpState={passUpState}
